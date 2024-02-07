@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="zn-ch">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebSocket Receiver</title>
+    <style>
+        #message-box{
+            height: 600px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            overflow-y: scroll;
+        }
+        .content-list {
+            display: grid;
+            grid-gap: 10px;
+            justify-content: space-between;
+            grid-template-columns: repeat(auto-fill,162.85px);
+            overflow: hidden
+        }
+        .content-list li {
+            width: 162.86px;
+            margin-bottom: 5px;
+            display: inline-block;
+            position: relative;
+            box-sizing: border-box
+        }
+
+
+    </style>
+</head>
+<body>
+    <h1>WebSocket Receiver</h1>
+    <div id="message-box">
+        <ul class="content-list">
+            <li>
+        <div class="a">
+            <img id="Img1" width="100%" height="100%" alt="Profile Image" src="https://p26.douyinpic.com/aweme/100x100/aweme-avatar/tos-cn-avt-0015_386c6f38c9c8d982e77ac80390b78073.jpeg?from=3067671334">
+        </div>
+                <p id="name1"></p>
+            </li>
+            <li>
+        <div class="a">
+            <img id="Img2" width="100%" height="100%" alt="Profile Image" src="https://p26.douyinpic.com/aweme/100x100/aweme-avatar/tos-cn-avt-0015_386c6f38c9c8d982e77ac80390b78073.jpeg?from=3067671334">
+        </div>
+                <p id="name2"></p>
+            </li>
+            <li>
+        <div class="a">
+            <img id="Img3" width="100%" height="100%" alt="Profile Image" src="https://p26.douyinpic.com/aweme/100x100/aweme-avatar/tos-cn-avt-0015_386c6f38c9c8d982e77ac80390b78073.jpeg?from=3067671334">
+        </div>
+                <p id="name3"></p>
+            </li>
+            <li>
+        <div class="a">
+            <img id="Img4" width="100%" height="100%" alt="Profile Image" src="https://p26.douyinpic.com/aweme/100x100/aweme-avatar/tos-cn-avt-0015_386c6f38c9c8d982e77ac80390b78073.jpeg?from=3067671334">
+        </div>
+                <p id="name4"></p>
+            </li>
+            <li>
+        <div class="a">
+            <img id="Img5" width="100%" height="100%" alt="Profile Image" src="https://p26.douyinpic.com/aweme/100x100/aweme-avatar/tos-cn-avt-0015_386c6f38c9c8d982e77ac80390b78073.jpeg?from=3067671334">
+        </div>
+                <p id="name5"></p>
+            </li>
+            <li>
+        <div class="a">
+            <img id="Img6" width="100%" height="100%" alt="Profile Image" src="https://p26.douyinpic.com/aweme/100x100/aweme-avatar/tos-cn-avt-0015_386c6f38c9c8d982e77ac80390b78073.jpeg?from=3067671334">
+        </div>
+                <p id="name6"></p>
+            </li>
+            <li>
+        <div class="a">
+            <img id="Img7" width="100%" height="100%" alt="Profile Image" src="https://p26.douyinpic.com/aweme/100x100/aweme-avatar/tos-cn-avt-0015_386c6f38c9c8d982e77ac80390b78073.jpeg?from=3067671334">
+        </div>
+                <p id="name7"></p>
+            </li>
+            <li>
+        <div class="a">
+            <img id="Img8" width="100%" height="100%" alt="Profile Image" src="https://p26.douyinpic.com/aweme/100x100/aweme-avatar/tos-cn-avt-0015_386c6f38c9c8d982e77ac80390b78073.jpeg?from=3067671334">
+        </div>
+                <p id="name8"></p>
+            </li>
+        </ul>
+
+    </div>
+
+    <script>
+
+        // 创建WebSocket对象
+        const ws = new WebSocket("ws://localhost:8080");
+
+        // 当WebSocket连接打开时触发的回调函数
+        ws.onopen = function() {
+            console.log("WebSocket connection established.");
+        };
+        ws.onmessage = function (event) {
+          const user = JSON.parse(event.data);
+          datalist.push(user);
+          console.log(datalist)
+        };
+        // 接收消息的回调函数
+        // ws.onmessage = function(event) {
+        //     // 获取HTML元素，这里假设有一个id为'nickname'的元素用于显示昵称
+        //     const user = JSON.parse(event.data);
+        //     // 获取HTML元素（假设有一个id为'nickname'的元素用于显示昵称）
+        //     const nicknameElement = document.getElementById('nickname');
+        //     // 获取一个id为'profileImg'的元素用于显示图片
+        //     const imgElement = document.getElementById('profileImg');
+        //
+        //     // 将昵称插入到HTML元素中
+        //     if (nicknameElement) {
+        //       nicknameElement.textContent = user.nickName;
+        //     }
+        //
+        //     // 将图片URL设置为img元素的src属性，以便加载和显示图片
+        //     if (imgElement instanceof HTMLImageElement) {
+        //       imgElement.src = user.userimg;
+        //     }
+        //     const messageBox = document.getElementById("message-box");
+        //     //  messageBox.innerHTML += "<p>" + event.data["nickName"] + "</p>";
+        //   //  messageBox.innerHTML += "<img src=event.data["nickName"]></img>";
+        //     messageBox.scrollTop = messageBox.scrollHeight; // 自动滚动到底部
+        // };
+
+        // 当WebSocket连接关闭时触发的回调函数
+        ws.onclose = function() {
+            console.log("WebSocket connection closed.");
+        };
+
+        // 当发生错误时触发的回调函数
+        ws.onerror = function(error) {
+            console.error("WebSocket error: " + error);
+        };
+        let count = 0;
+        let ul_count = 1;
+        let datalist = [];
+
+        async function display(){
+            while (true){
+                while (count<datalist.length){
+                        // 获取HTML元素（假设有一个id为'nickname'的元素用于显示昵称）
+                    const nicknameElement = document.getElementById('name'+ul_count);
+                    // 获取一个id为'profileImg'的元素用于显示图片
+                    const imgElement = document.getElementById('Img'+ul_count);
+                    // 将图片URL设置为img元素的src属性，以便加载和显示图片
+                    if (imgElement instanceof HTMLImageElement) {
+                      imgElement.src = datalist[count].userimg;
+                    }
+                    // 将昵称插入到HTML元素中
+                    if (nicknameElement) {
+                      nicknameElement.textContent = datalist[count].nickName;
+                    }
+
+
+                   // datalist.splice(0, 1);
+                    count++;
+                    ul_count++;
+
+                    if(count===1000){
+                        datalist.splice(0, 1000);
+                        count = 0;
+                    }
+                    if(ul_count===9){
+                        ul_count = 1;
+                    }
+
+                    await new Promise(resolve => setTimeout(resolve, 100));
+                }
+                await new Promise(resolve => setTimeout(resolve, 50));
+            }
+        }
+        window.onload = function (){
+            display();
+        };
+    </script>
+</body>
+</html>

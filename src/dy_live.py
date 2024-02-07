@@ -174,6 +174,11 @@ def unPackWebcastGiftMessage(data):
         gift_traceId = data.get("traceId")
         # 对特殊礼物单独统计
         if gift_name in LIVE_GIFT_LIST and gift_traceId not in GlobalVal.gift_id_list:
+            user_data = {
+                "nickName": nick_name,
+                "userimg": data['user']['AvatarThumb']['urlListList'][0],
+            }
+            ws_sender(json.dumps(user_data))
             logger.info(f"抓到特殊礼物了: {gift_name}，用户名：{nick_name}")
             GlobalVal.gift_list.append(f"{nick_name}")
             GlobalVal.gift_id_list.append(gift_traceId)

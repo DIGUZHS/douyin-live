@@ -33,7 +33,7 @@ def ws_sender(msg):
 
 
 # 创建WebSocket连接
-ws_send = websocket.WebSocketApp("ws://192.168.110.196:8989/echo",
+ws_send = websocket.WebSocketApp("ws://localhost:8080",
                                  on_open=on_open,
                                  on_message=on_message,
                                  on_close=on_close,
