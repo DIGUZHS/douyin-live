@@ -6,7 +6,7 @@ from config import LIVE_WEB_SEND
 def on_open(ws):
     print("连接已建立")
     # 发送消息给服务器
-    ws.send("Hello, server!")
+    #ws.send("Hello, server!")
 
 
 def on_message(ws, message):

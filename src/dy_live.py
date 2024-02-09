@@ -173,11 +173,12 @@ def unPackWebcastGiftMessage(data):
         # 抖音礼物唯一标识
         gift_traceId = data.get("traceId")
         # 对特殊礼物单独统计
+        user_data = {
+            "nickName": nick_name,
+            "userimg": data['user']['AvatarThumb']['urlListList'][0],
+        }
         if gift_name in LIVE_GIFT_LIST and gift_traceId not in GlobalVal.gift_id_list:
-            user_data = {
-                "nickName": nick_name,
-                "userimg": data['user']['AvatarThumb']['urlListList'][0],
-            }
+
             ws_sender(json.dumps(user_data))
             logger.info(f"抓到特殊礼物了: {gift_name}，用户名：{nick_name}")
             GlobalVal.gift_list.append(f"{nick_name}")
@@ -186,7 +187,8 @@ def unPackWebcastGiftMessage(data):
         GlobalVal.gift_num += int(data.get("totalCount", 1))
         GlobalVal.gift_value += (int(data["gift"]["diamondCount"]) * int(data.get("totalCount", 1)))
         # 将消息发送到我们自己的服务器:websocket链接
-        ws_sender(f"收到礼物: {gift_name}，礼物数量:{GlobalVal.gift_num}，礼物价值: {GlobalVal.gift_value}")
+        #ws_sender(json.dumps(user_data))
+        #ws_sender(f"收到礼物: {gift_name}，礼物数量:{GlobalVal.gift_num}，礼物价值: {GlobalVal.gift_value}")
     except Exception as e:
         logger.error(f"解析礼物数据出错: {e}")
     log = json.dumps(data, ensure_ascii=False)
